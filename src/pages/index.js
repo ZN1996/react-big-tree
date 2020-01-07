@@ -1,7 +1,10 @@
 import React from 'react';
+import { Input } from 'antd';
 import styles from './index.less';
 import Tree from '@/components/tree';
+import fuzzySearch from '@/components/tree/fuzzysearch';
 const bigData = require('@/mock/big-tree.json');
+const { Search } = Input;
 const simpleData = [
   { id: 1, pid: 0, name: '随意勾选 1', open: true },
   { id: 11, pid: 1, name: '随意勾选 1-1', open: true },
@@ -26,6 +29,9 @@ export default function() {
   const onMounted = nextZtreeObj => {
     console.log('ztreeObj: ', nextZtreeObj);
     setZtreeObj(nextZtreeObj);
+    // TODO: 添加模糊搜索功能
+    // eslint-disable-next-line
+    fuzzySearch(nextZtreeObj.setting.treeId, '#treeSearch', null, true);
   };
   const onClick = (evt, treeId, treeNode) => {
     // 点击事件
@@ -101,6 +107,7 @@ export default function() {
   return (
     <div className={styles.normal}>
       <div className={styles.treeOuter}>
+        <Search id="treeSearch" />
         <div className={styles.treeWrapper}>
           <Tree {...treeConfig} />
         </div>
